@@ -8,4 +8,5 @@
     // Cuando se inicia Live Preview, abrirá automáticamente game.html
     // ubicado en el directorio /views/
     "livePreview.defaultPreviewPath": "/views/game.html"
+    
 }
