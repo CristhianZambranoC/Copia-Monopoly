@@ -1,4 +1,11 @@
 {
+    // Puerto personalizado para Live Server
+    // Este puerto (5502) se usa para evitar conflictos con otros servidores locales
+    // que puedan estar corriendo en los puertos por defecto (5500, 5501)
     "liveServer.settings.port": 5502,
+
+    // Ruta por defecto para la vista previa en vivo
+    // Cuando se inicia Live Preview, abrirá automáticamente game.html
+    // ubicado en el directorio /views/
     "livePreview.defaultPreviewPath": "/views/game.html"
 }
