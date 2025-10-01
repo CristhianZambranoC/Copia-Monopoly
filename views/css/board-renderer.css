@@ -1,0 +1,288 @@
+/* ===== ESTILOS ESPECÍFICOS PARA EL RENDERIZADO DEL TABLERO MONOPOLY ===== */
+
+/* Tablero base responsive */
+.monopoly-board-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.monopoly-board {
+  position: relative;
+  background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+  border: 3px solid #495057;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  aspect-ratio: 1;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
+
+/* Centro del tablero */
+.board-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  font-family: 'Georgia', serif;
+  font-weight: bold;
+  color: #495057;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 5;
+}
+
+/* Casillas del tablero */
+.square {
+  position: absolute;
+  background: #ffffff;
+  border: 1px solid #495057;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.7em;
+  font-weight: 500;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.square:hover {
+  background: #f8f9fa;
+  transform: scale(1.02);
+  z-index: 10;
+}
+
+/* Casillas especiales */
+.square.corner {
+  border: 2px solid #495057;
+  font-weight: bold;
+  background: linear-gradient(135deg, #e9ecef, #f8f9fa);
+}
+
+.square.railroad {
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  color: white;
+}
+
+.square.utility {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  color: white;
+}
+
+/* Propiedades con colores */
+.square.property {
+  position: relative;
+}
+
+.property-color {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  border-radius: 4px 4px 0 0;
+}
+
+/* Fichas de jugadores */
+.player-token {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 20;
+  transition: all 0.3s ease;
+}
+
+.player-token.current-player {
+  animation: pulse 1.5s infinite;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+}
+
+/* Indicadores de propiedades */
+.owner-indicator {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 10px;
+  z-index: 15;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.building-indicator {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  z-index: 15;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.mortgage-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  z-index: 15;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* RESPONSIVE PARA MÓVIL HORIZONTAL */
+@media screen and (max-width: 896px) and (orientation: landscape) {
+  
+  .monopoly-board {
+    max-width: calc(100vh - 140px);
+    max-height: calc(100vh - 140px);
+    border-width: 2px;
+    border-radius: 8px;
+  }
+
+  .board-center {
+    padding: 6px;
+    font-size: 8px;
+    border-radius: 4px;
+  }
+
+  .square {
+    font-size: 0.5em;
+    border-width: 1px;
+  }
+
+  .property-color {
+    height: 4px;
+  }
+
+  .player-token {
+    width: 12px;
+    height: 12px;
+    font-size: 8px;
+    border-width: 1px;
+  }
+
+  .owner-indicator {
+    width: 12px;
+    height: 12px;
+    font-size: 8px;
+    top: 1px;
+    right: 1px;
+  }
+
+  .building-indicator {
+    font-size: 8px;
+    bottom: 1px;
+  }
+
+  .mortgage-indicator {
+    font-size: 12px;
+  }
+
+  /* Ajuste específico para casillas de esquina */
+  .square.corner {
+    border-width: 1px;
+    font-size: 0.45em;
+  }
+}
+
+/* Para móviles muy pequeños */
+@media screen and (max-width: 667px) and (orientation: landscape) {
+  
+  .monopoly-board {
+    max-width: calc(100vh - 120px);
+    max-height: calc(100vh - 120px);
+  }
+
+  .board-center {
+    font-size: 6px;
+    padding: 4px;
+  }
+
+  .square {
+    font-size: 0.4em;
+  }
+
+  .player-token {
+    width: 10px;
+    height: 10px;
+    font-size: 6px;
+  }
+
+  .owner-indicator {
+    width: 10px;
+    height: 10px;
+    font-size: 6px;
+  }
+
+  .building-indicator {
+    font-size: 6px;
+  }
+
+  .mortgage-indicator {
+    font-size: 10px;
+  }
+}
+
+/* Animaciones optimizadas para móvil */
+@media screen and (max-width: 896px) {
+  
+  .square:hover {
+    transform: none; /* Eliminar hover effects en móvil */
+  }
+
+  .moving {
+    transition: all 0.4s ease-in-out; /* Animación más rápida */
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+}
+
+/* Modo de alto contraste para mejor visibilidad en pantallas pequeñas */
+@media screen and (max-width: 896px) and (orientation: landscape) {
+  
+  .square {
+    border-color: #333;
+  }
+
+  .property-color {
+    border-bottom: 1px solid #333;
+  }
+
+  .player-token {
+    border-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 0 0 1px #333, 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .owner-indicator, .building-indicator, .mortgage-indicator {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+}

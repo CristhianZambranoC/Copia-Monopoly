@@ -1,0 +1,402 @@
+/* cartas.css — estética carta Monopoly “de imprenta” */
+
+/* ===== Tokens ===== */
+:root {
+  --paper: #fffdf3;
+  /* marfil */
+  --ink: #151515;
+  /* tinta negra */
+  --border: #171717;
+  /* borde impreso */
+  --shadow-strong: 0 14px 36px rgba(0, 0, 0, .24);
+  --shadow-card: 0 2px 0 #000, 0 10px 22px rgba(0, 0, 0, .20);
+
+  /* Colores por tipo (pedidos del usuario) */
+  --chance-1: #d7ebff;
+  /* Sorpresa azul */
+  --chance-2: #6fb2ff;
+  --cc-1: #fff1b3;
+  /* Comunidad amarillo */
+  --cc-2: #ffd64a;
+
+  /* Dorado del medallón */
+  --foil-1: #f7e7a6;
+  --foil-2: #e7c35a;
+  --foil-3: #d1a23a;
+
+  --ok: #1a7f37;
+  --ko: #bf0522;
+}
+
+/* ===== Demo layout (igual que antes, sutilmente mejorado) ===== */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(1100px 550px at 50% -12%, #fafbff 0, #eef1f6 35%, #e6e9ef 60%, #e3e6ec 100%);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Arial;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(320px, 430px) 1fr;
+  gap: 18px;
+  padding: 18px;
+}
+
+.panel-control,
+.panel-carta,
+.panel-log {
+  background: #ffffffcc;
+  border: 1px solid #e7e7e7;
+  border-radius: 16px;
+  padding: 16px;
+  backdrop-filter: blur(4px);
+  box-shadow: var(--shadow-strong);
+}
+
+.fila {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 8px 0 14px;
+}
+
+.select,
+.btn-primario {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #cfcfcf;
+  background: #fff;
+}
+
+.btn-primario {
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.contenedor-carta {
+  min-height: 390px;
+  display: grid;
+  place-items: center;
+}
+
+.badge {
+  display: inline-block;
+  padding: .35rem .6rem;
+  border-radius: 999px;
+  background: #111;
+  color: #fff;
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+/* ===== Carta ===== */
+.card-monopoly {
+  position: relative;
+  width: min(92%, 360px);
+  aspect-ratio: 2.5 / 3.5;
+  /* naipe clásico */
+  background:
+    /* textura papel y punteado de impresión */
+    radial-gradient(140% 90% at 50% -10%, rgba(0, 0, 0, .06), transparent 60%) no-repeat,
+    repeating-linear-gradient(135deg, rgba(0, 0, 0, .012) 0 2px, transparent 2px 6px),
+    var(--paper);
+  border: 3px solid var(--border);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transform: rotate(-.7deg);
+}
+
+/* Marco interior “impreso” con sangría */
+.card-monopoly::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: 14px;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    conic-gradient(from 0deg, #dedede, #ffffff, #dedede) border-box;
+  border: 2px solid transparent;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .08);
+  pointer-events: none;
+}
+
+/* Banda MONOPOLY (ribbon rojo) */
+.card-monopoly .band-logo {
+  position: absolute;
+  left: 50%;
+  top: 14px;
+  transform: translateX(-50%) rotate(-2deg);
+  background: #c50018;
+  color: #fff;
+  font-weight: 900;
+  letter-spacing: .8px;
+  padding: .28rem .6rem;
+  border: 2px solid #7c0010;
+  border-radius: 8px;
+  box-shadow: 0 2px 0 #0005, inset 0 0 0 1px rgba(255, 255, 255, .25);
+  font-size: .9rem;
+  text-transform: uppercase;
+  z-index: 3;
+}
+
+/* Cabecera por tipo */
+.card-monopoly .card-header {
+  position: relative;
+  z-index: 1;
+  margin-top: 44px;
+  /* deja espacio para la banda */
+  padding: 14px 14px 10px;
+  text-align: center;
+  border-bottom: 3px solid var(--border);
+}
+
+.card-monopoly.chance .card-header {
+  background: linear-gradient(180deg, var(--chance-1), var(--chance-2));
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .12), 0 0 0 2px #185fb8 inset;
+}
+
+.card-monopoly.community_chest .card-header {
+  background: linear-gradient(180deg, var(--cc-1), var(--cc-2));
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .12), 0 0 0 2px #c28e00 inset;
+}
+
+/* Chip de tipo */
+.card-monopoly .chip-tipo {
+  display: inline-block;
+  padding: .5rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  box-shadow: 0 3px 0 #0002, inset 0 0 0 1px #0001;
+}
+
+.card-monopoly.chance .chip-tipo {
+  color: #0f2f6b;
+}
+
+.card-monopoly.community_chest .chip-tipo {
+  color: #6b4d00;
+}
+
+/* Número de serie */
+.card-monopoly .card-header::after {
+  content: "# " attr(data-id);
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  font-size: .78rem;
+  font-weight: 800;
+  color: #0009;
+  background: #fff8;
+  border: 1px solid #0003;
+  border-radius: 8px;
+  padding: 2px 6px;
+}
+
+/* Icono central según tipo */
+.card-monopoly .icono {
+  display: flex;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.icono-sorpresa,
+.icono-cofre {
+  width: 70px;
+  height: 70px;
+  fill: #111;
+  stroke: #111;
+  stroke-width: .8;
+  filter: drop-shadow(0 2px 1px rgba(0, 0, 0, .25));
+}
+
+/* Cuerpo con marca de agua */
+.card-monopoly .card-body {
+  position: relative;
+  z-index: 0;
+  flex: 1;
+  padding: 16px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-monopoly .card-body::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: 68%;
+  aspect-ratio: 1/1;
+  transform: translate(-50%, -50%) rotate(-10deg);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(0, 0, 0, .06), transparent 45%) no-repeat,
+    repeating-conic-gradient(from 0deg, rgba(0, 0, 0, .05) 0 8deg, transparent 8deg 16deg);
+  opacity: .32;
+  filter: blur(.2px);
+  pointer-events: none;
+}
+
+/* Tipografía de descripción “imprenta” */
+.card-monopoly .descripcion {
+  font-size: 1.06rem;
+  line-height: 1.38;
+  text-align: center;
+  margin: 8px 6px 14px;
+  font-variant-ligatures: common-ligatures;
+  text-wrap: balance;
+}
+
+/* Medallón de valor con foil */
+.card-monopoly .valor {
+  align-self: center;
+  font-weight: 900;
+  font-size: 1.72rem;
+  padding: .48rem 1.05rem;
+  border-radius: 14px;
+  border: 2px solid #000;
+  background: linear-gradient(135deg, var(--foil-1), var(--foil-2) 40%, var(--foil-3));
+  color: #2d1a00;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6),
+    inset 0 -2px 4px rgba(0, 0, 0, .15),
+    0 3px 0 #0003;
+}
+
+.card-monopoly .valor.positivo {
+  outline: 2px solid color-mix(in srgb, var(--ok) 55%, #000);
+}
+
+.card-monopoly .valor.negativo {
+  outline: 2px solid color-mix(in srgb, var(--ko) 55%, #000);
+}
+
+/* Pie con sello legal */
+.card-monopoly .card-footer {
+  position: relative;
+  z-index: 1;
+  border-top: 3px solid var(--border);
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  background: repeating-linear-gradient(45deg, #0000000a 0 6px, transparent 6px 12px);
+}
+
+.card-monopoly .sello {
+  font-size: .68rem;
+  letter-spacing: .02em;
+  color: #222c;
+  background: #fff;
+  border: 1px dashed #2226;
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+
+/* Botón */
+.btn-aplicar {
+  padding: .65rem 1rem;
+  border-radius: 12px;
+  border: 2px solid #000;
+  font-weight: 800;
+  background: linear-gradient(180deg, #fff, #f5f5f5);
+  cursor: pointer;
+  box-shadow: 0 3px 0 #0003;
+}
+
+.btn-aplicar:hover {
+  filter: brightness(.98);
+  transform: translateY(1px);
+}
+
+/* Halos externos por tipo (muy sutiles) */
+.card-monopoly.chance {
+  box-shadow: var(--shadow-card), 0 0 28px rgba(64, 140, 255, .18);
+}
+
+.card-monopoly.community_chest {
+  box-shadow: var(--shadow-card), 0 0 28px rgba(255, 215, 64, .18);
+}
+
+/* Log demo */
+.log {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+
+.log li {
+  background: #f7f7f7;
+  border: 1px solid #e7e7e7;
+  border-radius: 10px;
+  padding: .5rem .65rem;
+}
+
+/* Animación de salida */
+@keyframes cardPopOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(-0.7deg);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(50px) scale(0.8) rotate(-3deg);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+  }
+
+  to {
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0);
+  }
+}
+
+/* Mejoras visuales adicionales */
+.card-monopoly {
+  transform-origin: center;
+  will-change: transform;
+}
+
+.card-monopoly .btn-aplicar {
+  transition: all 0.3s ease;
+}
+
+.card-monopoly .btn-aplicar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card-monopoly .valor {
+  font-size: 2rem;
+  letter-spacing: -0.5px;
+}
+
+.card-monopoly .valor.positivo {
+  color: var(--ok);
+}
+
+.card-monopoly .valor.negativo {
+  color: var(--ko);
+}

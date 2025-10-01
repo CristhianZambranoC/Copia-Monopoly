@@ -1,0 +1,585 @@
+/* ===== ESTILOS RESPONSIVE PARA MÓVIL HORIZONTAL ===== */
+
+/* 
+  Media query para dispositivos móviles en orientación horizontal
+  - Ancho máximo: 896px (móviles y tablets pequeñas)
+  - Orientación: landscape (horizontal)  
+  - Altura máxima: 800px (para evitar aplicarse en desktop de escritorio)
+*/
+@media screen and (max-width: 896px) and (orientation: landscape) and (max-height: 800px) {
+  
+  /* Reset del body para móvil horizontal */
+  .game-body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  /* Contenedor principal ajustado para horizontal */
+  .main-container {
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    gap: 5px;
+  }
+
+  /* Header compacto para móvil */
+  .mobile-header {
+    padding: 8px 10px !important;
+    margin-bottom: 5px !important;
+    border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+  }
+
+  /* Título compacto */
+  .game-title {
+    font-size: 1.2em !important;
+    margin-bottom: 8px !important;
+    text-align: center;
+  }
+
+  /* Barra de estado móvil - más compacta */
+  .mobile-status {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 8px;
+  }
+
+  /* Sección del jugador principal compacta */
+  .player-core {
+    min-width: 250px;
+    flex-shrink: 0;
+  }
+
+  .pc-header {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+  }
+
+  .pc-name {
+    font-size: 0.9em !important;
+    font-weight: bold;
+  }
+
+  .pc-money {
+    font-size: 0.95em !important;
+    font-weight: bold;
+    color: #28a745;
+  }
+
+  /* Grid de estadísticas más compacto */
+  .pc-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 4px !important;
+    font-size: 0.75em !important;
+  }
+
+  .pc-item {
+    padding: 3px !important;
+    border-radius: 4px !important;
+  }
+
+  .pc-label {
+    display: block;
+    font-size: 0.7em !important;
+    margin-bottom: 1px !important;
+  }
+
+  .pc-val {
+    font-weight: bold !important;
+    font-size: 0.8em !important;
+  }
+
+  /* Resumen de jugadores horizontal y compacto */
+  .players-compact {
+    flex: 1;
+    overflow-x: auto;
+  }
+
+  .players-row {
+    display: flex !important;
+    gap: 10px !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .players-row li {
+    min-width: 100px;
+    flex-shrink: 0;
+    font-size: 0.7em;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 4px;
+    text-align: center;
+  }
+
+  /* Layout principal para móvil horizontal */
+  .mobile-layout,
+  .board-and-actions {
+    flex: 1;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+    margin: 0 !important;
+    max-height: calc(100vh - 100px);
+    overflow: hidden;
+  }
+
+  /* Tablero ocupa la mayor parte del ancho */
+  .mobile-board,
+  .main-board {
+    flex: 2.5;
+    min-height: 0;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Contenedor del tablero ajustado */
+  .mobile-board-container,
+  .board-container,
+  #boardContainer {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: calc(100vh - 120px);
+    padding: 8px !important;
+    border-radius: 8px !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Sidebar lateral compacto */
+  .mobile-sidebar,
+  .sidebar-monopoly {
+    width: 140px !important;
+    min-width: 140px !important;
+    max-width: 140px !important;
+    padding: 8px !important;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+    border-radius: 8px !important;
+    border: 1px solid #dee2e6 !important;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+
+  /* Título del nav compacto */
+  .mobile-nav-title {
+    font-size: 0.9em !important;
+    margin-bottom: 6px !important;
+    color: #495057;
+    text-align: center;
+  }
+
+  /* Botón de dados compacto */
+  .mobile-dice-btn {
+    padding: 6px 8px !important;
+    font-size: 0.8em !important;
+    margin-bottom: 6px !important;
+    white-space: nowrap;
+  }
+
+  /* Botones de acción compactos */
+  .mobile-sidebar .btn {
+    padding: 4px 6px !important;
+    font-size: 0.65em !important;
+    margin-bottom: 3px !important;
+    border-radius: 4px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.1;
+  }
+
+  /* Grid de acciones más compacto */
+  #acciones-casilla {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+  }
+
+  /* Separador más delgado */
+  .mobile-sidebar hr {
+    margin: 6px 0 !important;
+    border-color: #dee2e6;
+  }
+
+  /* Footer oculto en móvil horizontal */
+  .game-controls {
+    display: none !important;
+  }
+
+  /* Ajustes específicos del tablero Monopoly */
+  .monopoly-board-container {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    padding: 4px !important;
+  }
+
+  /* Ajustes para el centro del tablero */
+  .board-center {
+    font-size: 10px !important;
+    padding: 5px !important;
+  }
+
+  /* Casillas del tablero más pequeñas */
+  .square {
+    font-size: 0.6em !important;
+  }
+
+  /* Fichas de jugadores más pequeñas */
+  .player-token {
+    width: 12px !important;
+    height: 12px !important;
+    font-size: 8px !important;
+  }
+
+  /* Indicadores más pequeños */
+  .owner-indicator {
+    width: 14px !important;
+    height: 14px !important;
+    font-size: 8px !important;
+  }
+
+  .building-indicator {
+    font-size: 10px !important;
+  }
+
+  .mortgage-indicator {
+    font-size: 14px !important;
+  }
+
+  /* Dados compactos */
+  #diceBox {
+    max-width: 120px;
+    max-height: 60px;
+  }
+
+  /* Modales ajustados para móvil horizontal */
+  .modal-hipoteca, .modal-deshipoteca {
+    width: 90vw !important;
+    max-width: 400px !important;
+    max-height: 80vh !important;
+    overflow-y: auto;
+  }
+
+  .modal-hipoteca-body, .modal-deshipoteca-body {
+    padding: 10px !important;
+  }
+
+  .hipoteca-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .hipo-card {
+    padding: 8px !important;
+    font-size: 0.8em !important;
+  }
+
+  /* Toast notifications ajustadas */
+  #toastContainer {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 9999;
+    max-width: 200px;
+  }
+
+  .toast {
+    font-size: 0.75em !important;
+    padding: 6px 10px !important;
+  }
+}
+
+/* ===== ESTILOS PARA MODALES EN CUALQUIER ORIENTACIÓN ===== */
+/* Estos estilos se aplican siempre, no solo en landscape */
+
+/* Asegurar scroll interno en modales */
+.modal-dialog {
+  max-height: 90vh !important;
+}
+
+.modal-content {
+  max-height: 90vh !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-body {
+  overflow-y: auto !important;
+  flex: 1;
+  max-height: calc(90vh - 120px) !important;
+}
+
+/* Modales responsivos - aplicar siempre en móvil */
+@media screen and (max-width: 896px) {
+  
+  /* Modal principal ajustado para móvil */
+  .modal-responsive .modal-content-responsive {
+    max-width: 90vw !important;
+    max-height: 85vh !important;
+    margin: auto !important;
+    border-radius: 8px !important;
+    overflow: hidden;
+  }
+
+  .modal-responsive {
+    padding: 10px !important;
+  }
+
+  /* Header del modal compacto */
+  .modal-header-compact {
+    padding: 8px 15px !important;
+    border-bottom: 1px solid #dee2e6;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    flex-shrink: 0;
+  }
+
+  .modal-title-responsive {
+    font-size: 1rem !important;
+    font-weight: 600;
+    color: #495057;
+    margin: 0;
+  }
+
+  /* Body del modal responsive */
+  .modal-body-responsive {
+    padding: 12px 15px !important;
+    font-size: 0.85rem;
+    max-height: calc(85vh - 100px);
+    overflow-y: auto !important;
+    flex: 1;
+  }
+
+  .modal-body-scrollable {
+    overflow-y: auto !important;
+  }
+
+  /* Footer del modal compacto */
+  .modal-footer-responsive {
+    padding: 8px 15px !important;
+    border-top: 1px solid #dee2e6;
+    gap: 8px;
+    justify-content: center;
+    background: #f8f9fa;
+    flex-shrink: 0;
+  }
+
+  /* Botones responsivos */
+  .btn-responsive {
+    padding: 6px 12px !important;
+    font-size: 0.8rem !important;
+    border-radius: 4px !important;
+    min-width: 80px;
+    font-weight: 500;
+  }
+
+  /* Form elements responsivos */
+  .label-responsive {
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 4px !important;
+    color: #495057;
+  }
+
+  .form-select-responsive {
+    padding: 6px 8px !important;
+    font-size: 0.85rem !important;
+    border-radius: 4px !important;
+    border: 1px solid #ced4da;
+  }
+
+  .form-select-responsive:focus {
+    border-color: #86b7fe !important;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15) !important;
+  }
+
+  /* Feedback messages */
+  .feedback-responsive {
+    font-size: 0.7rem !important;
+    margin-top: 2px !important;
+  }
+
+  /* Alert messages */
+  .alert-responsive {
+    padding: 6px 10px !important;
+    font-size: 0.75rem !important;
+    border-radius: 4px !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* Container para campos dinámicos */
+  .container-responsive {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Estilos específicos para el modal de datos de jugadores */
+  .modal-lg.modal-responsive .modal-content-responsive {
+    max-width: 95vw !important;
+  }
+
+  /* Grid de jugadores para móvil */
+  .player-data-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    width: 100%;
+  }
+
+  .player-data-card {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 8px;
+  }
+
+  .player-data-card .form-label {
+    font-size: 0.75rem !important;
+    margin-bottom: 3px !important;
+    font-weight: 600;
+    color: #6c757d;
+  }
+
+  .player-data-card .form-control,
+  .player-data-card .form-select {
+    padding: 4px 6px !important;
+    font-size: 0.8rem !important;
+    border-radius: 3px !important;
+    border: 1px solid #ced4da;
+    margin-bottom: 4px;
+  }
+
+  .player-data-card .form-control:focus,
+  .player-data-card .form-select:focus {
+    border-color: #86b7fe !important;
+    box-shadow: 0 0 0 0.1rem rgba(13, 110, 253, 0.15) !important;
+  }
+
+  /* Token display en el card */
+  .token-display {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 16px;
+    font-size: 8px;
+    font-weight: bold;
+    color: white;
+    margin-left: 4px;
+  }
+
+  /* Ajustes para inputs específicos */
+  .form-control-sm-responsive {
+    padding: 3px 5px !important;
+    font-size: 0.75rem !important;
+    height: auto !important;
+  }
+}
+
+/* Para móviles muy pequeños - una sola columna */
+@media screen and (max-width: 576px) {
+  .player-data-grid {
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+  
+  .modal-responsive .modal-content-responsive {
+    max-width: 95vw !important;
+    max-height: 90vh !important;
+  }
+  
+  .modal-body-responsive {
+    max-height: calc(90vh - 100px);
+  }
+}
+
+/* Media query para tabletas en horizontal */
+@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) and (max-height: 768px) {
+  
+  .mobile-sidebar {
+    width: 180px !important;
+    min-width: 180px !important;
+  }
+
+  .mobile-sidebar .btn {
+    font-size: 0.75em !important;
+    padding: 6px 8px !important;
+  }
+
+  .pc-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+/* Aviso de rotación SOLO para móviles pequeños en portrait */
+@media screen and (max-width: 896px) and (max-height: 800px) and (orientation: portrait) {
+  .rotation-notice {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .rotation-notice h2 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+  }
+  
+  .rotation-notice p {
+    font-size: 1.1em;
+    margin-bottom: 30px;
+  }
+  
+  .rotation-notice .rotate-icon {
+    font-size: 4em;
+    margin-bottom: 20px;
+    animation: rotate 2s infinite linear;
+  }
+  
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .main-container {
+    display: none !important;
+  }
+}

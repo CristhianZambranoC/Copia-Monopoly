@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Prueba Tablero Monopoly</title>
+    <link rel="stylesheet" href="/views/css/style.css">
+    <link rel="stylesheet" href="/views/css/cartas.css">
+    <link rel="stylesheet" href="/views/css/dice.css">
+    <link rel="stylesheet" href="/views/css/ui-enhancements.css">
+    <link rel="stylesheet" href="/views/css/mobile-responsive.css">
+
+</head>
+
+<body class="game-body">
+
+    <!-- Aviso de rotación para móviles -->
+    <div class="rotation-notice">
+        <div class="rotate-icon">🔄</div>
+        <h2>Rota tu dispositivo</h2>
+        <p>Para una mejor experiencia de juego, por favor rota tu dispositivo a modo horizontal.</p>
+        <p style="font-size: 0.9em; opacity: 0.8;">Este juego está optimizado para pantalla horizontal.</p>
+    </div>
+
+    <!-- Contenedor dinámico de notificaciones -->
+    <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+    <div class="main-container">
+        <header class="controls mobile-header">
+                        <h1 class="game-title">Monopoly - Fernando
+                            <button id="toggleStats" type="button" aria-expanded="false" aria-controls="playerCore" class="stats-toggle" style="margin-left:10px; font-size:0.65em; padding:4px 8px; border-radius:6px; border:1px solid #ccc; background:#fff; cursor:pointer;">Más</button>
+                        </h1>
+            <div class="top-status-bar mobile-status" id="topStatusBar">
+                <div class="tsb-section player-core" id="playerCore">
+                    <div class="pc-header">
+                        <div class="pc-token" id="pc-token"></div>
+                        <div class="pc-main">
+                            <div class="pc-name" id="ps-nombre">-</div>
+                            <div class="pc-country">
+                                <img id="ps-flag-img" class="flag-img" alt="Bandera" loading="lazy" />
+                                <span id="ps-flag" aria-hidden="true">🏳️</span>
+                                <span id="ps-pais">-</span>
+                            </div>
+                        </div>
+                        <div class="pc-money" title="Dinero disponible">$<span id="ps-dinero">0</span></div>
+                    </div>
+                    <div class="pc-grid compact">
+                        <div class="pc-item" title="Posición en el tablero"><span class="pc-label">Posición</span><span id="ps-posicion" class="pc-val">0</span></div>
+                        <div class="pc-item" title="Propiedades totales"><span class="pc-label">Propiedades</span><span id="ps-propiedades" class="pc-val">0</span></div>
+                        <div class="pc-item" data-priority="low" title="Propiedades hipotecadas"><span class="pc-label">Hipotecadas</span><span id="ps-hipotecadas" class="pc-val">0</span></div>
+                        <div class="pc-item" data-priority="low" title="Ferrocarriles"><span class="pc-label">Ferrocarriles</span><span id="ps-ferrocarriles" class="pc-val">0</span></div>
+                        <div class="pc-item" data-priority="low" title="Casas construidas"><span class="pc-label">Casas</span><span id="ps-casas" class="pc-val">0</span></div>
+                        <div class="pc-item" data-priority="low" title="Hoteles construidos"><span class="pc-label">Hoteles</span><span id="ps-hoteles" class="pc-val">0</span></div>
+                        <div class="pc-item" data-priority="low" title="Monopolios (grupos completos)"><span class="pc-label">Monopolios</span><span id="ps-monopolios" class="pc-val">0</span></div>
+                        <div class="pc-item" title="Patrimonio total"><span class="pc-label">Patrimonio</span><span id="ps-patrimonio" class="pc-val">0</span></div>
+                        <div class="pc-item" title="Renta potencial sumada"><span class="pc-label">Renta</span><span id="ps-renta" class="pc-val">0</span></div>
+                        <div class="pc-item" data-priority="low" title="Valor hipotecado (principal)"><span class="pc-label">Hipotecado</span><span id="ps-mortgage-total" class="pc-val">0</span></div>
+                        <div class="pc-item" data-priority="low" title="Costo deshipotecar todo (incluye 10% interés)"><span class="pc-label">Costo Deship.</span><span id="ps-mortgage-cost" class="pc-val">0</span></div>
+                        <div class="pc-item" data-priority="low" title="% propiedades hipotecadas"><span class="pc-label">% Hip.</span><span id="ps-mortgage-percent" class="pc-val">0%</span></div>
+                        <div class="pc-item" data-priority="low" title="Liquidez (Dinero / Patrimonio)"><span class="pc-label">Liquidez</span><span id="ps-liquidez" class="pc-val">0%</span></div>
+                        <div class="pc-item" data-priority="low" title="Estado cárcel"><span class="pc-label">Cárcel</span><span id="ps-carcel" class="pc-val">No</span></div>
+                    </div>
+                </div>
+                <div class="tsb-section players-compact" id="playerStatsPanel">
+                    <ul id="ps-resumen" class="players-row"></ul>
+                </div>
+            </div>
+        </header>
+
+        <!-- NUEVO contenedor para tablero + nav -->
+        <section class="board-and-actions mobile-layout">
+            <main class="main-board mobile-board">
+                <div id="boardContainer" class="board-container mobile-board-container">
+                    <div class="loading">
+                        <p>Inicializando tablero...</p>
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- MUEVE AQUÍ tu nav existente (córtalo de arriba y pégalo aquí) -->
+            <nav class="sidebar-monopoly mobile-sidebar d-flex flex-column align-items-center bg-light border-start p-3"
+                id="sidebar-monopoly">
+                <h5 class="mb-4 text-center mobile-nav-title">Acciones</h5>
+                <button class="btn btn-primary w-100 mb-3 mobile-dice-btn" id="btnLanzarDados">
+                    <span id="dados-resultado">🎲🎲</span> Lanzar Dados
+                </button>
+                <div class="d-grid gap-2 w-100" id="acciones-casilla">
+                    <button class="btn btn-success" id="btnComprarPropiedad">Comprar Propiedad</button>
+                    <button class="btn btn-warning" id="btnPagarRenta">Pagar Renta</button>
+                    <button class="btn btn-info" id="btnConstruirCasa">Construir Casa</button>
+                    <button class="btn btn-info" id="btnConstruirHotel">Construir Hotel</button>
+                    <button class="btn btn-secondary" id="btnHipotecar">Hipotecar Propiedad</button>
+                    <button class="btn btn-secondary" id="btnDeshipotecar">Deshipotecar Propiedad</button>
+                    <button class="btn btn-outline-primary" id="btnCartaSorpresa">Carta Sorpresa</button>
+                    <button class="btn btn-outline-primary" id="btnCajaComunidad">Caja de Comunidad</button>
+                    <button class="btn btn-danger" id="btnPagarImpuesto">Pagar Impuesto</button>
+                    <button class="btn btn-dark" id="btnIrCarcel">Pagar Salida de la Carcel</button>
+                    <button class="btn btn-outline-success" id="btnFinalizarJuego">Finalizar Juego</button>
+                </div>
+                <hr class="my-3 w-100">
+                <button class="btn btn-outline-info w-100 mb-2" id="btnRankingSidebar">Ver Ranking Global</button>
+            </nav>
+        </section>
+
+
+        <footer class="game-controls">
+            <p>&copy; 2024 Monopoly Online. Todos los derechos reservados.</p>
+            <p>Desarrollado por David Fernando Bedoya Ramírez</p>
+        </footer>
+    </div>
+
+   <!-- Recuadro simple para dados -->
+<div id="diceBox">
+  <div id="diceContent">
+      <!-- El contenido se agregará dinámicamente -->
+  </div>
+</div>
+
+
+    <script type="module" src="../models/Game.js"></script>
+
+            <!-- Modal Hipoteca -->
+            <div class="modal-hipoteca-overlay" id="modalHipoteca">
+                <div class="modal-hipoteca">
+                    <div class="modal-hipoteca-header">
+                        <h5>🏦 Hipotecar Propiedad</h5>
+                        <button id="closeHipotecaModal" class="modal-close-btn">✕</button>
+                    </div>
+                    <div class="modal-hipoteca-body" id="hipotecaModalBody">
+                        <div id="hipoteca-alert" class="hipoteca-alert"></div>
+                        <div class="hipoteca-property">
+                            <div id="hipoteca-color" class="hipoteca-color-box"></div>
+                            <div style="flex:1;">
+                                <div id="hipoteca-nombre" class="hipoteca-property-info-name">Propiedad</div>
+                                <div id="hipoteca-descripcion" class="hipoteca-property-info-desc">Descripción</div>
+                            </div>
+                        </div>
+                        <div class="hipoteca-grid">
+                            <div class="hipo-card">
+                                <div class="hipo-label">Valor Original</div>
+                                <div id="hipoteca-valor-original" class="hipo-value">$0</div>
+                            </div>
+                            <div class="hipo-card highlight">
+                                <div class="hipo-label">Recibirás</div>
+                                <div id="hipoteca-valor-recibir" class="hipo-value">$0</div>
+                            </div>
+                            <div class="hipo-card">
+                                <div class="hipo-label">Dinero Actual</div>
+                                <div id="hipoteca-dinero-actual" class="hipo-value">$0</div>
+                            </div>
+                            <div class="hipo-card success">
+                                <div class="hipo-label">Dinero Final</div>
+                                <div id="hipoteca-dinero-final" class="hipo-value">$0</div>
+                            </div>
+                        </div>
+                        <div class="hipo-warning-box">
+                            <div class="hipo-warning-title">⚠️ Importante</div>
+                            <ul>
+                                <li>No podrás cobrar renta mientras esté hipotecada.</li>
+                                <li>Para deshipotecar pagarás valor + 10%.</li>
+                                <li>La propiedad quedará marcada visualmente.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="hipoteca-footer">
+                        <button id="cancelarHipoteca" class="modal-btn cancel">Cancelar</button>
+                        <button id="confirmarHipoteca" class="modal-btn action">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Deshipoteca -->
+            <div class="modal-deshipoteca-overlay" id="modalDeshipoteca">
+                <div class="modal-deshipoteca">
+                    <div class="modal-deshipoteca-header">
+                        <h5>🔓 Deshipotecar Propiedad</h5>
+                        <button id="closeDeshipotecaModal" class="modal-close-btn">✕</button>
+                    </div>
+                    <div class="modal-deshipoteca-body" id="deshipotecaModalBody">
+                        <div id="deshipoteca-alert" class="hipoteca-alert" style="background:#e0f2fe; border-color:#bae6fd; color:#075985;"></div>
+                        <div class="hipoteca-property">
+                            <div id="deshipoteca-color" class="hipoteca-color-box"></div>
+                            <div style="flex:1;">
+                                <div id="deshipoteca-nombre" class="hipoteca-property-info-name">Propiedad</div>
+                                <div id="deshipoteca-descripcion" class="hipoteca-property-info-desc">Descripción</div>
+                            </div>
+                        </div>
+                        <div class="hipoteca-grid">
+                            <div class="hipo-card">
+                                <div class="hipo-label">Valor Hipoteca</div>
+                                <div id="deshipoteca-valor-hipoteca" class="hipo-value">$0</div>
+                            </div>
+                            <div class="hipo-card highlight" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd); border-color:#7dd3fc;">
+                                <div class="hipo-label" style="color:#075985;">Costo Recuperar</div>
+                                <div id="deshipoteca-costo" class="hipo-value" style="color:#075985;">$0</div>
+                            </div>
+                            <div class="hipo-card">
+                                <div class="hipo-label">Dinero Actual</div>
+                                <div id="deshipoteca-dinero-actual" class="hipo-value">$0</div>
+                            </div>
+                            <div class="hipo-card success" style="background:linear-gradient(135deg,#fafafa,#e5e7eb); border-color:#d1d5db;">
+                                <div class="hipo-label" style="color:#475569;">Dinero Luego</div>
+                                <div id="deshipoteca-dinero-final" class="hipo-value" style="color:#475569;">$0</div>
+                            </div>
+                        </div>
+                        <div class="hipo-warning-box" style="background:#f0f9ff; border-color:#bae6fd;">
+                            <div class="hipo-warning-title" style="color:#075985;">ℹ️ Nota</div>
+                            <ul>
+                                <li>Al deshipotecar vuelve a generar renta.</li>
+                                <li>Debes pagar el valor + 10% de interés.</li>
+                                <li>Se restaurará el color original del indicador.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="deshipoteca-footer">
+                        <button id="cancelarDeshipoteca" class="modal-btn cancel">Cancelar</button>
+                        <button id="confirmarDeshipoteca" class="modal-btn unmortgage">Deshipotecar</button>
+                    </div>
+                </div>
+            </div>
+
+                        <script type="module" src="../controllers/hipoteca.modal.js"></script>
+                        <script type="module" src="../controllers/deshipoteca.modal.js"></script>
+                        <script src="/js/mobile-optimizer.js"></script>
+                        <script>
+                        (function(){
+                            function scaleBoard(){
+                                const mqLandscape = window.matchMedia('(max-width: 896px) and (orientation: landscape)');
+                                const boardContainer = document.getElementById('boardContainer');
+                                if(!boardContainer) return;
+                                if(!mqLandscape.matches){
+                                    boardContainer.removeAttribute('data-mobile-scale');
+                                    const board = boardContainer.querySelector('.monopoly-board');
+                                    if(board) board.style.transform='';
+                                    boardContainer.style.minHeight='';
+                                    return;
+                                }
+                                const sidebar = document.getElementById('sidebar-monopoly');
+                                const header = document.querySelector('.controls');
+                                const headerH = header?header.getBoundingClientRect().height:0;
+                                const sidebarW = sidebar?sidebar.getBoundingClientRect().width:0;
+                                const gap = 30;
+                                const availableWidth = window.innerWidth - sidebarW - gap;
+                                const availableHeight = window.innerHeight - headerH - gap;
+                                if(availableWidth<=100 || availableHeight<=100) return;
+                                const board = boardContainer.querySelector('.monopoly-board');
+                                if(!board){ setTimeout(scaleBoard,400); return; }
+                                const naturalSize = board.offsetWidth || board.clientWidth;
+                                if(!naturalSize){ setTimeout(scaleBoard,300); return; }
+                                const scale = Math.min(availableWidth/naturalSize, availableHeight/naturalSize, 1);
+                                board.style.transformOrigin='top left';
+                                board.style.transform=`scale(${scale})`;
+                                boardContainer.setAttribute('data-mobile-scale', scale.toFixed(3));
+                                boardContainer.style.minHeight=(naturalSize*scale+20)+'px';
+                            }
+                            window.addEventListener('resize', scaleBoard);
+                            document.addEventListener('DOMContentLoaded', ()=> setTimeout(scaleBoard,800));
+                            setTimeout(scaleBoard,1600);
+                            setTimeout(scaleBoard,3000);
+                        })();
+                        (function(){
+                            const btn = document.getElementById('toggleStats');
+                            const grid = document.querySelector('.pc-grid.compact');
+                            if(!btn||!grid) return;
+                            btn.addEventListener('click',()=>{
+                                const expanded = btn.getAttribute('aria-expanded')==='true';
+                                btn.setAttribute('aria-expanded', String(!expanded));
+                                grid.classList.toggle('expanded', !expanded);
+                                window.dispatchEvent(new Event('resize'));
+                            });
+                        })();
+                        (function(){
+                            const modal = document.getElementById('modalDatosJugadores');
+                            if(!modal) return;
+                            const observer = new MutationObserver(()=>{
+                                const lastInput = modal.querySelector('#nicknamesContainer input:last-of-type');
+                                const iniciar = document.getElementById('btnIniciar');
+                                const body = modal.querySelector('.modal-body');
+                                if(lastInput && iniciar && body){
+                                    requestAnimationFrame(()=> body.scrollTo({top: body.scrollHeight, behavior:'smooth'}));
+                                    lastInput.addEventListener('focus', ()=> body.scrollTo({top: body.scrollHeight, behavior:'smooth'}));
+                                }
+                            });
+                            observer.observe(modal,{childList:true, subtree:true});
+                        })();
+                        </script>
+            
+</body>
+
+</html>

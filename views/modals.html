@@ -1,0 +1,53 @@
+<!-- Modal 1: Selección de número de jugadores (CSS/JS externos eliminados a solicitud) -->
+<div class="modal fade" id="modalJugadores" tabindex="-1" aria-labelledby="modalJugadoresLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered modal-responsive">
+    <div class="modal-content modal-content-responsive">
+      <div class="modal-header modal-header-compact">
+        <h5 class="modal-title modal-title-responsive" id="modalJugadoresLabel">Selecciona el número de jugadores</h5>
+      </div>
+      <div class="modal-body modal-body-responsive">
+        <form id="formNumJugadores" novalidate>
+          <div class="mb-3">
+            <label for="numJugadores" class="form-label fw-semibold label-responsive">Número de jugadores <span class="text-danger">*</span></label>
+            <select class="form-select form-select-responsive" id="numJugadores" required>
+              <option value="" disabled selected>Selecciona...</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+            <div class="invalid-feedback feedback-responsive">Debes seleccionar un número de jugadores.</div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer modal-footer-responsive">
+        <button type="button" class="btn btn-primary btn-responsive" id="btnSiguiente">Siguiente</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 2: Datos de cada jugador -->
+<div class="modal fade" id="modalDatosJugadores" tabindex="-1" aria-labelledby="modalDatosJugadoresLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-responsive">
+    <div class="modal-content modal-content-responsive">
+      <div class="modal-header modal-header-compact">
+        <h5 class="modal-title modal-title-responsive" id="modalDatosJugadoresLabel">Datos de Jugadores</h5>
+      </div>
+      <div class="modal-body modal-body-responsive modal-body-scrollable">
+        <div id="alertErroresJugadores" class="alert alert-danger py-2 px-3 d-none alert-responsive" style="font-size: .9rem;">
+          <strong>Errores de validación:</strong>
+          <ul id="listaErroresJugadores" class="mb-0"></ul>
+        </div>
+        <form id="formJugadores" novalidate>
+          <div id="nicknamesContainer" class="container-responsive">
+            <!-- Campos dinámicos -->
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer modal-footer-responsive">
+        <button type="button" class="btn btn-secondary btn-responsive" id="btnRegresarConfig">Regresar</button>
+        <button type="button" class="btn btn-success btn-responsive" id="btnIniciar" disabled>Iniciar Juego</button>
+      </div>
+    </div>
+  </div>
+</div>

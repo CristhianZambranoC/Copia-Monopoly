@@ -1,0 +1,362 @@
+/* ===== ESTILOS RESPONSIVE OPTIMIZADOS ===== */
+
+/* ===== MODALES RESPONSIVOS (SIEMPRE APLICABLES) ===== */
+
+/* Asegurar que los modales siempre puedan hacer scroll */
+.modal {
+  z-index: 1050;
+}
+
+.modal-dialog {
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+}
+
+.modal-content {
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-body {
+  overflow-y: auto !important;
+  max-height: calc(90vh - 120px);
+  flex: 1;
+}
+
+/* Ajuste específico: asegurar que en modales con muchos campos (datos jugadores) el botón Iniciar sea alcanzable */
+#modalDatosJugadores .modal-content {
+  display: flex;
+  flex-direction: column;
+}
+#modalDatosJugadores .modal-body {
+  max-height: none; /* dejamos que el contenedor padre limite */
+  flex: 1 1 auto;
+  overflow-y: auto !important;
+  padding-bottom: 140px; /* espacio para que el último campo no quede oculto tras el footer fijo */
+}
+#modalDatosJugadores .modal-footer {
+  position: sticky;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
+  backdrop-filter: blur(4px);
+  z-index: 5;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.08);
+}
+
+/* En pantallas muy bajas (alto reducido) reducir padding para ganar espacio útil */
+@media screen and (max-height: 500px) {
+  #modalDatosJugadores .modal-body { padding-bottom: 110px; }
+  #modalDatosJugadores .modal-footer { padding: 6px 10px; }
+  #modalDatosJugadores .btn { padding: 6px 10px; font-size: 0.75rem; }
+}
+
+/* Estilos específicos para modales responsivos */
+@media screen and (max-width: 768px) {
+  .modal-dialog {
+    margin: 10px;
+    max-width: calc(100vw - 20px);
+  }
+  
+  .modal-content {
+    max-height: 95vh;
+  }
+  
+  .modal-body {
+    max-height: calc(95vh - 100px);
+    padding: 15px;
+  }
+  
+  .modal-header {
+    padding: 10px 15px;
+    flex-shrink: 0;
+  }
+  
+  .modal-footer {
+    padding: 10px 15px;
+    flex-shrink: 0;
+  }
+  
+  .modal-title {
+    font-size: 1.1rem;
+  }
+  
+  /* Estilos para formularios en modales móviles */
+  .form-control, .form-select {
+    font-size: 16px; /* Prevenir zoom en iOS */
+    padding: 8px 12px;
+  }
+  
+  .btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+  
+  /* Grid de jugadores responsive */
+  .player-data-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .player-data-card {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 12px;
+  }
+  
+  .player-data-card h6 {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+  }
+  
+  .player-data-card .form-label {
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  
+  .player-data-card .form-control,
+  .player-data-card .form-select {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+    margin-bottom: 8px;
+  }
+  
+  .token-display {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 18px;
+    font-size: 10px;
+    font-weight: bold;
+    color: white;
+    margin-left: 6px;
+  }
+}
+
+/* Para tablets en landscape */
+@media screen and (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+  .player-data-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+}
+
+/* ===== ESTILOS PARA EL JUEGO EN MÓVIL HORIZONTAL ===== */
+
+/* Móvil horizontal: mantener experiencia casi de escritorio pero escalando el tablero */
+@media screen and (max-width: 896px) and (orientation: landscape) {
+  /* No ocultar overflow para permitir que elementos se muestren */
+  .main-container {
+    overflow: visible !important;
+    padding: 8px 10px;
+  }
+
+  /* Mantener tamaños legibles: no reducir tipografías del header */
+  .game-title { font-size: 1.4rem; }
+
+  /* Estructura horizontal normal (ya existe en desktop) */
+  .board-and-actions.mobile-layout { flex-direction: row; align-items: flex-start; }
+
+  /* Quitar min-height fija que provoca clip en alturas pequeñas */
+  #boardContainer.board-container {
+    min-height: 0 !important;
+    padding: 10px !important;
+    /* El tamaño exacto (width/height) se calcula vía JS para cuadrar */
+  }
+
+  /* Permitir que el contenedor interno pueda reducirse */
+  .main-board { display: flex; align-items: center; justify-content: center; }
+
+  /* Sidebar: usar altura disponible, scroll interno */
+  .sidebar-monopoly.mobile-sidebar {
+    position: relative;
+    max-height: none;
+    height: auto;
+    overflow-y: auto;
+    width: 260px; /* un poco más angosto que desktop */
+  }
+
+  /* Evitar versiones ultra comprimidas anteriores */
+  .sidebar-monopoly .btn { font-size: 0.75rem; padding: 6px 10px; }
+
+  /* Grid de stats: mantener columns adaptables */
+  .pc-grid { grid-template-columns: repeat(auto-fill,minmax(90px,1fr)); }
+
+  /* Tokens y casillas: escalar globalmente con transform sobre el tablero más que reducciones absolutas aquí */
+  #boardContainer[data-mobile-scale] .monopoly-board { transform-origin: top left; }
+
+  /* Ajustes de barra de estado compacta */
+  .pc-grid.compact { 
+    display: grid; 
+    gap: 4px; 
+    grid-template-columns: repeat(auto-fill,minmax(82px,1fr));
+  }
+  .pc-grid.compact .pc-item { 
+    padding:4px 6px; 
+    background: rgba(255,255,255,0.85); 
+    border:1px solid rgba(0,0,0,0.05); 
+    border-radius:6px; 
+    font-size:11px; 
+    line-height:1.1; 
+    display:flex; flex-direction:column; align-items:center; justify-content:center; 
+    transition:opacity .25s ease, transform .25s ease; 
+  }
+  .pc-grid.compact .pc-label { font-size:10px; opacity:.75; display:block; }
+  .pc-grid.compact .pc-val { font-size:12px; font-weight:600; }
+
+  /* Ocultar items de baja prioridad por defecto en modo compacto */
+  .pc-grid.compact:not(.expanded) .pc-item[data-priority="low"] { 
+    opacity:0; pointer-events:none; position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); 
+  }
+
+  /* Botón toggle estilos refinados */
+  .stats-toggle { 
+    background:linear-gradient(135deg,#ffffff,#f1f3f5); 
+    border:1px solid #ced4da; 
+    color:#343a40; 
+    font-weight:600; 
+    box-shadow:0 2px 4px rgba(0,0,0,0.08); 
+    transition: background .3s, box-shadow .3s; 
+  }
+  .stats-toggle:hover { background:#fff; box-shadow:0 3px 8px rgba(0,0,0,0.12); }
+  .stats-toggle[aria-expanded="true"] { background:#343a40; color:#fff; border-color:#343a40; }
+  .stats-toggle[aria-expanded="true"]::after { content:" ✕"; }
+  .stats-toggle[aria-expanded="false"]::after { content:" +"; }
+}
+
+/* Para móviles medianos en horizontal */
+@media screen and (max-width: 896px) and (orientation: landscape) and (min-height: 501px) and (max-height: 600px) {
+  
+  .main-container {
+    height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .mobile-layout {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px !important;
+  }
+  
+  .mobile-sidebar {
+    width: 150px !important;
+    min-width: 150px !important;
+  }
+  
+  .mobile-sidebar .btn {
+    font-size: 0.7em !important;
+    padding: 4px 8px !important;
+  }
+  
+  .pc-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+/* ===== FORZAR VISIBILIDAD DE ELEMENTOS CLAVE ===== */
+
+/* Asegurar que estos elementos siempre sean visibles */
+.board-and-actions,
+.main-board,
+.board-container,
+.sidebar-monopoly,
+#boardContainer {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Asegurar que el tablero tenga dimensiones */
+#boardContainer {
+  min-height: 200px;
+  min-width: 200px;
+}
+
+/* ===== AVISO DE ROTACIÓN MEJORADO ===== */
+
+/* Mostrar aviso de rotación solo en móviles pequeños en portrait */
+@media screen and (max-width: 896px) and (max-height: 500px) and (orientation: portrait) {
+  .rotation-notice {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .rotation-notice h2 {
+    margin-bottom: 20px;
+    font-size: 1.3em;
+  }
+  
+  .rotation-notice p {
+    font-size: 1em;
+    margin-bottom: 20px;
+  }
+  
+  .rotation-notice .rotate-icon {
+    font-size: 3em;
+    margin-bottom: 15px;
+    animation: rotate 2s infinite linear;
+  }
+  
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .main-container {
+    display: none !important;
+  }
+}
+
+/* En cualquier otro caso, ocultar el aviso */
+@media screen and (min-width: 897px),
+       screen and (min-height: 501px),
+       screen and (orientation: landscape) {
+  .rotation-notice {
+    display: none !important;
+  }
+}
+
+/* ===== MEJORAS DE ACCESIBILIDAD ===== */
+
+/* Focus states más visibles en móvil */
+@media screen and (max-width: 896px) {
+  .btn:focus,
+  .form-control:focus,
+  .form-select:focus {
+    outline: 2px solid #0066cc !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2) !important;
+  }
+  
+  /* Botones más grandes para touch */
+  .btn {
+    min-height: 36px;
+    min-width: 44px;
+  }
+  
+  /* Inputs más grandes para evitar zoom */
+  .form-control,
+  .form-select {
+    font-size: 16px;
+    min-height: 40px;
+  }
+}

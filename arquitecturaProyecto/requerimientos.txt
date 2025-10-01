@@ -1,0 +1,14 @@
+Muchachos los requemientos del proyecto son: 
+
+Primero están las cosas que sí o sí necesitamos para que el juego funcione. Aquí entra la configuración inicial, donde escogemos cuántos jugadores van a jugar (entre 2 y 4), cada uno arranca con $1500, se le asigna una ficha con un color único y, antes de empezar, el sistema nos pide un nickname y el país al que pertenecemos (esto lo consulta del backend en /countries)
+
+para el tablero de juego. Este se renderiza completo con todas las casillas, mostrando el nombre de cada propiedad, su color característico y el estado (disponible, dueño, casas u hotel)
+
+en el lanzamiento de dados, con un botón que genera números aleatorios entre 1 y 6. También nos piden que haya una opción para meter los valores a mano, más que nada para hacer pruebas rápidas en la sustentación. La ficha del jugador en turno se mueve según el resultado, cuando un jugador cae en una casilla, deben pasar cosas: si la propiedad está libre, puede comprarla; si es de otro jugador, toca pagar renta; si está hipotecada, no cobra nada; si es propia, puede construir. Además, están las casillas especiales: las cartas de Sorpresa y Comunidad, los impuestos y la cárcel, que le pone sabor al juego
+
+Una vez tengamos eso andando, pasamos a lo de prioridad media. Aquí entra la construcción de casas y hoteles. La regla es que solo se puede construir si el jugador tiene todas las propiedades del mismo color. Primero se ponen casas (máximo 4), y después viene el hotel que reemplaza las casas. Los precios son fijos (100 por casa y 250 el hotel), y la renta cambia según lo definido en el backend.
+
+También está la parte de las hipotecas y préstamos. Básicamente, si un jugador necesita dinero puede hipotecar una propiedad y recibir el valor que define el backend. Mientras tanto, esa propiedad no genera renta. Si quiere recuperarla, paga lo recibido más un 10% extra. Ojo que si al final no paga, esa propiedad no cuenta para el puntaje final.
+
+Finalmente, tenemos lo que sería la cereza del pastel. Cada jugador debería tener un panel de información, donde se vea su dinero, propiedades, banderita del país y préstamos activos. Y ya para cerrar, está la finalización del juego: se calcula el patrimonio de cada jugador (dinero + propiedades + construcciones – hipotecas) y se envía el puntaje al backend con /score-recorder. Además, el sistema debe permitir consultar el ranking global de jugadores en /ranking, mostrando las banderas de los países.
+
